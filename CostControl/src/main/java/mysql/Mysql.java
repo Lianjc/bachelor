@@ -1,4 +1,4 @@
-/**
+package mysql; /**
  * Created by lianjiangchao on 16/3/5.
  */
 

@@ -8,7 +8,7 @@
 
     <servlet>
         <servlet-name>helloworld</servlet-name>
-        <servlet-class>HelloServlet</servlet-class>
+        <servlet-class>mysql.HelloServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

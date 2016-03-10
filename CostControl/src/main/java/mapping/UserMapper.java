@@ -1,3 +1,5 @@
+package mapping;
+
 import org.apache.ibatis.annotations.Param;
 
 /**

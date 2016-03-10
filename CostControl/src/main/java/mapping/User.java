@@ -1,3 +1,5 @@
+package mapping;
+
 /**
  * Created by lianjiangchao on 16/3/10.
  */
