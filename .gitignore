@@ -1,3 +1,5 @@
 CostControl/target/
 *.iml
-CostControl/.idea/*
+CostControl/.idea/
+CostControlManagement/target/
+CostControlManagement/.idea/

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lian.mapper.UserMapper">
+
+    <resultMap id="basicMap" type="org.lian.domain.User">
+        <id property="id" column="ID"/>
+        <result property="name" column="Name"/>
+        <result property="phone" column="Phone"/>
+        <result property="password" column="Password"/>
+    </resultMap>
+
+    <insert id="insertPhoneAndPasswordAndName" parameterType="org.lian.domain.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (user.Phone, user.Password, user.Name )
+        VALUES (#{phone}, #{password},#{name})
+    </insert>
+
+    <update id="updatePasswordOrName" parameterType="org.lian.domain.User">
+        UPDATE user
+        <set>
+            <if test="name != null">user.Name = #{name},</if>
+            <if test="password != null">user.Password = #{password},</if>
+        </set>
+        WHERE user.phone = #{phone}
+    </update>
+
+    <select id="selectIndirect" resultMap="basicMap">
+        SELECT *
+        FROM user
+        <where>
+            <if test="user.phone != null"> AND user.phone = #{user.phone}</if>
+            <if test="user.name != null"> AND user.name = #{user.name}</if>
+            <if test="user.password != null"> AND user.password = #{user.password}</if>
+        </where>
+    </select>
+
+    <select id="selectByID" resultMap="basicMap">
+        SELECT *
+        FROM user
+        WHERE user.ID = #{ID}
+    </select>
+
+    <select id="selectByPhone" resultMap="basicMap">
+        SELECT *
+        FROM user
+        WHERE user.Phone = #{phone}
+    </select>
+
+</mapper>
