@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lian.mapper.FormMapper">
+    <resultMap id="basicMap" type="org.lian.domain.Form">
+        <id property="id" column="ID"/>
+        <result property="createdate" column="Createdate" jdbcType="DATE"/>
+        <result property="description" column="Description"/>
+        <result property="path" column="Path" jdbcType="LONGVARCHAR"/>
+        <result property="type" column="Type"/>
+        <association property="user" javaType="org.lian.domain.User">
+            <id property="id" column="User_ID"/>
+            <result property="phone" column="User_Phone"/>
+            <result property="name" column="User_Name"/>
+        </association>
+    </resultMap>
+
+    <sql id="*">
+        Form.ID as ID,
+        Form.Description as Description,
+        Form.Path as Path,
+        Form.Createdate as Createdate,
+        Form.Type as Type,
+        User.ID as User_ID,
+        User.Name as User_Name,
+        User.Phone as User_Phone
+    </sql>
+
+    <select id="selectOne" resultMap="basicMap">
+        SELECT <include refid="*"/>
+        FROM Form, User
+        WHERE Form.User_ID = User.ID
+        AND Form.ID = #{id}
+    </select>
+
+</mapper>

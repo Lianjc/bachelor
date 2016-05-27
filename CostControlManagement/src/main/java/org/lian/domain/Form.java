@@ -1,8 +1,6 @@
 package org.lian.domain;
 
-import javax.xml.soap.Text;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by lianjiangchao on 16/5/24.
@@ -10,8 +8,8 @@ import java.util.List;
 public class Form {
     private Integer id;
     private String description;
-    private Text path;
-    private List<User> user;
+    private String path;
+    private User user;
     private Date createdate;
     private String type;
 
@@ -31,19 +29,19 @@ public class Form {
         this.description = description;
     }
 
-    public Text getPath() {
+    public String getPath() {
         return path;
     }
 
-    public void setPath(Text path) {
+    public void setPath(String path) {
         this.path = path;
     }
 
-    public List<User> getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(List<User> user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
