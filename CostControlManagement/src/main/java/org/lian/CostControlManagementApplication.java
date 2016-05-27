@@ -9,4 +9,5 @@ public class CostControlManagementApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CostControlManagementApplication.class, args);
 	}
+
 }

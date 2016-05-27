@@ -24,12 +24,25 @@
         User.Name as User_Name,
         User.Phone as User_Phone
     </sql>
+    <insert id="insertDescription" parameterType="org.lian.domain.Form" useGeneratedKeys="true" keyProperty="id">
+
+        INSERT Form (Form.Description)
+        VALUES (#{description})
+    </insert>
 
     <select id="selectOne" resultMap="basicMap">
         SELECT <include refid="*"/>
         FROM Form, User
         WHERE Form.User_ID = User.ID
         AND Form.ID = #{id}
+    </select>
+
+    <select id="selectIndirect" resultMap="basicMap">
+        SELECT <include refid="*"/>
+        FROM Form, User
+        WHERE Form.User_ID = User.ID
+        <if test="description != null"> AND form.description = #{description}</if>
+        <if test="startDate != null and endDate != null"> AND form.createdate between #{startDate} and #{endDate}</if>
     </select>
 
 </mapper>

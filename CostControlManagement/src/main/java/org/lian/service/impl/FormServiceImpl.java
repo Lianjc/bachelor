@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * Created by lianjiangchao on 16/5/26.
  */
@@ -25,4 +28,17 @@ public class FormServiceImpl implements FormService {
     public Form findOne(Integer id) {
         return formMapper.selectOne(id);
     }
+
+    @Override
+    public List<Form> findIndirect(String description, Date startDate, Date endDate) {
+        return formMapper.selectIndirect(description, startDate , endDate);
+    }
+
+    @Override
+    public Integer addOne(Form form) {
+        formMapper.insertDescription(form);
+        return form.getId();
+    }
+
+
 }

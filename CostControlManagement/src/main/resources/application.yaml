@@ -7,6 +7,9 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
   thymeleaf:
     cache: false
+  http:
+    encoding:
+      charset: UTF-8
 
 mybatis:
   mapper-locations: classpath:/mappers/*Mapper.xml
