@@ -13,7 +13,7 @@ public class Process {
 
     private Integer id;
     private String name;
-    private Text description;
+    private String description;
     private String type;
     private Date createdate;
     private Double plancost;
@@ -56,11 +56,11 @@ public class Process {
         this.name = name;
     }
 
-    public Text getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(Text description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 

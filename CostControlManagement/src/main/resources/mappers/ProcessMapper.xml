@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lian.mapper.ProcessMapper">
+    <resultMap id="basicMap" type="org.lian.domain.Process">
+        <id property="id" column="ID"/>
+        <result property="name" column="Name"/>
+        <result property="description" column="Description" jdbcType="LONGVARCHAR"/>
+        <result property="type" column="Type"/>
+        <result property="plancost" column="Plan_Cost"/>
+        <result property="cost" column="Cost"/>
+        <result property="price" column="Price"/>
+        <result property="amount" column="Amount"/>
+        <result property="unit" column="Unit"/>
+        <result property="createdate" column="Createdate" jdbcType="DATE"/>
+        <association property="department" javaType="org.lian.domain.Department">
+            <id property="id" column="Department_ID"/>
+            <result property="description" column="Process_Description"/>
+        </association>
+
+
+    </resultMap>
+    <sql id="*">
+        Process.ID as ID,Process.Name as Name, Process.Description as Description,Process.Createdate as Createdate,
+        Process.Type as Type, Process.Price as Price, Process.Amount as Amount, Process.Unit as Unit,
+        Process.Plan_Cost as Plan_Cost, Process.Cost as Cost, Department.ID as Department_ID, Department.Description as Department_Description
+    </sql>
+    <insert id="insertProcess" parameterType="org.lian.domain.Process" useGeneratedKeys="true" keyProperty="id">
+        INSERT Process (Process.Name,Process.Description)
+        VALUES (#{name},#{description})
+
+    </insert>
+    <update id="updateProcess" parameterType="org.lian.domain.Process" >
+        UPDATE Process
+        <set>
+            <if test="name != null">Process.Name = #{name},</if>
+            <if test="description != null">Process.Description = #{description},</if>
+            <if test="type != null">Process.Type = #{type},</if>
+            <if test="price != null">Process.Price = #{price},</if>
+            <if test="amount != null">Process.Amount = #{amount},</if>
+            <if test="unit != null">Process.Unit = #{unit},</if>
+            <if test="plancost != null">Process.Plan_Cost = # {plancost},</if>
+
+        </set>
+        WHERE Process.ID = #{id}
+    </update>
+
+    <select id="selectById" resultMap="basicMap">
+        SELECT <include refid="*"/>
+        FROM Process LEFT JOIN Department ON Process.Department_ID = Department.ID
+        WHERE Process.ID = #{id}
+    </select>
+
+    <select id="selectIndirect" resultMap="basicMap">
+        SELECT <include refid="*"/>
+        FROM Process, Department
+        WHERE Process.Department_ID = Department.ID
+        <if test="name != null"> AND Process.Name = #{name}</if>
+        <if test="startDate != null and endDate != null"> AND Process.Createdate between #{startDate} and #{endDate}</if>
+
+    </select>
+
+
+</mapper>

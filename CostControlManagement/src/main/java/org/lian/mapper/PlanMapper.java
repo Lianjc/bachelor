@@ -11,8 +11,8 @@ import java.util.List;
  */
 @Mapper
 public interface PlanMapper {
-    List<Plan> selectByStatus(String status);
-    Plan selectById(Integer id);
+    List<Plan> selectByStatus(@Param("status") String status);
+    Plan selectById(@Param("id") Integer id);
     void insertPlan(Plan plan);
     void updatePlan(Plan plan);
 }
