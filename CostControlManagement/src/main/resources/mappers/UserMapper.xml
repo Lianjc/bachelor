@@ -7,7 +7,16 @@
         <result property="name" column="Name"/>
         <result property="phone" column="Phone"/>
         <result property="password" column="Password"/>
+        <association property="authority" javaType="org.lian.domain.Authority">
+            <id property="id" column="Authority_ID"/>
+            <result property="position" column="Position"/>
+        </association>
+
     </resultMap>
+    <sql id="*">
+        User.ID as ID ,User.Name as Name,User.Phone as Phone,User.Password as Password,
+        Authority.ID as Authority_ID,Authority.Position as Position
+    </sql>
 
     <insert id="insertPhoneAndPasswordAndName" parameterType="org.lian.domain.User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user (user.Phone, user.Password, user.Name )
@@ -24,25 +33,21 @@
     </update>
 
     <select id="selectIndirect" resultMap="basicMap">
-        SELECT *
-        FROM user
-        <where>
+        SELECT <include refid="*"/>
+        FROM user,Authority
+        WHERE User.Authority_ID = Authority.ID
             <if test="user.phone != null"> AND user.phone = #{user.phone}</if>
             <if test="user.name != null"> AND user.name = #{user.name}</if>
             <if test="user.password != null"> AND user.password = #{user.password}</if>
-        </where>
+
     </select>
 
     <select id="selectByID" resultMap="basicMap">
-        SELECT *
-        FROM user
-        WHERE user.ID = #{ID}
+        SELECT <include refid="*"/>
+        FROM user,Authority
+        WHERE user.Authority_ID = Authority.ID AND
+        user.ID = #{id}
     </select>
 
-    <select id="selectByPhone" resultMap="basicMap">
-        SELECT *
-        FROM user
-        WHERE user.Phone = #{phone}
-    </select>
 
 </mapper>

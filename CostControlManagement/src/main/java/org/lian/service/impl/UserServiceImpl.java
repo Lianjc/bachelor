@@ -29,11 +29,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findOne(String phone) {
-        return userMapper.selectByPhone(phone);
-    }
-
-    @Override
     public List<User> findIndirect(User user) {
         return userMapper.selectIndirect(user);
     }
@@ -47,7 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User editUser(User user) {
         userMapper.updatePasswordOrName(user);
-        return userMapper.selectByPhone(user.getPhone());
+        return userMapper.selectByID(user.getId());
     }
 
 }

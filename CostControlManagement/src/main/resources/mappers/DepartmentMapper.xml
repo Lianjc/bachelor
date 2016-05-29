@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lian.mapper.DepartmentMapper">
+
+    <resultMap id="basicMap" type="org.lian.domain.Department">
+        <id property="id" column="ID"/>
+        <result property="description" column="Description"/>
+        <result property="createdate" column="Createdate" jdbcType="DATE"/>
+        <result property="cost" column="Cost"/>
+        <result property="plancost" column="Plan_Cost"/>
+        <association property="user" javaType="org.lian.domain.User">
+            <id property="id" column="User_ID"/>
+            <result property="phone" column="User_Phone"/>
+            <result property="name" column="User_Name"/>
+        </association>
+    </resultMap>
+    <sql id="*">
+        Department.ID as ID,
+        Department.Description as Description,
+        Department.Createdate as Createdate,
+        Department.Cost as Cost,
+        Department.Plan_Cost as Plan_Cost,
+        User.ID as User_ID,
+        User.Name as User_Name,
+        User.Phone as User_Phone
+    </sql>
+
+    <insert id="insertDepartment" parameterType="org.lian.domain.Department" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO Department (Department.Description)
+        VALUES (#{description})
+    </insert>
+
+    <update id="updateDepartment" parameterType="org.lian.domain.Department">
+        UPDATE Department
+        <set>
+            <if test="plancost != null">Department.Plan_Cost = #{plancost},</if>
+            <if test="createdate != null">Department.CreateDate = #{createdate},</if>
+        </set>
+        WHERE Department.ID = #{id}
+    </update>
+
+    <select id="selectByID" resultMap="basicMap">
+        SELECT <include refid="*"/>
+        FROM Department, User
+        WHERE Department.User_ID = User.ID
+        AND Department.ID = #{id}
+    </select>
+
+    <select id="selectIndirect" resultMap="basicMap">
+        SELECT <include refid="*"/>
+        FROM Department, User
+        WHERE Department.User_ID = User.ID
+        <if test="description != null"> AND Department.Description = #{description} </if>
+    </select>
+
+</mapper>

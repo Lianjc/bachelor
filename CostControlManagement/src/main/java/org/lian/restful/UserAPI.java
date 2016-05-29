@@ -26,10 +26,6 @@ public class UserAPI {
         return userService.findOne(id);
     }
 
-    @RequestMapping(value = "/{phone}", method = RequestMethod.GET)
-    public User getOne(@PathVariable("phone") String phone) {
-        return userService.findOne(phone);
-    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<User> getSome(@ModelAttribute User user) {

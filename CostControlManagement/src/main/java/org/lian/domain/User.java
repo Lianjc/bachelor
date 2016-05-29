@@ -52,4 +52,11 @@ public class User {
         this.authority = authority;
     }
 
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
 }

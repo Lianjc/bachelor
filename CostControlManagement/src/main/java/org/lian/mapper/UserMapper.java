@@ -15,9 +15,7 @@ public interface UserMapper {
 
     List<User> selectIndirect(@Param("user") User user);
 
-    User selectByID(@Param("ID") Integer ID);
-
-    User selectByPhone(@Param("phone") String phone);
+    User selectByID(@Param("id") Integer id);
 
     void insertPhoneAndPasswordAndName(User user);
 

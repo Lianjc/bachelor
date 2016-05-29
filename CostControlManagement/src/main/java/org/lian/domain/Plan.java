@@ -1,6 +1,5 @@
 package org.lian.domain;
 
-import javax.xml.soap.Text;
 import java.util.Date;
 
 /**
@@ -10,7 +9,7 @@ public class Plan {
     private Integer id;
     private String status;
     private Date createdate;
-    private Text content;
+    private String content;
 
     public Integer getId() {
         return id;
@@ -36,11 +35,11 @@ public class Plan {
         this.createdate = createdate;
     }
 
-    public Text getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(Text content) {
+    public void setContent(String content) {
         this.content = content;
     }
 }

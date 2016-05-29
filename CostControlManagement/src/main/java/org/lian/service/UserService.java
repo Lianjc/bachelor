@@ -11,7 +11,6 @@ public interface UserService {
 
     User findOne(Integer id);
 
-    User findOne(String phone);
 
     List<User> findIndirect(User user);
 

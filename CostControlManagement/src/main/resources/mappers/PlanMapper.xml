@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lian.mapper.PlanMapper">
+    <resultMap id="basicMap" type="org.lian.domain.Plan">
+        <id property="id" column="ID"/>
+        <result property="status" column="Status"/>
+        <result property="createdate" column="Createdate" jdbcType="DATE"/>
+        <result property="content" column="Content" jdbcType="LONGVARCHAR"/>
+
+    </resultMap>
+    <insert id="insertPlan" parameterType="org.lian.domain.Plan" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO Plan (Plan.Content)
+        VALUES (#{content})
+    </insert>
+    <update id="updatePlan" parameterType="org.lian.domain.Plan">
+        UPDATE Plan
+        <set>
+            <if test="status != null">Plan.Status = #{status},</if>
+
+        </set>
+        WHERE Plan.ID = #{id}
+
+    </update>
+
+
+    <select id="selectByStatus" resultMap="basicMap">
+        SELECT *
+        FROM Plan
+        WHERE Plan.Status = #{status}
+
+
+    </select>
+    <select id="selectById" resultMap="basicMap">
+        SELECT *
+        FROM Plan
+        WHERE plan.ID = #{id}
+
+    </select>
+
+</mapper>
