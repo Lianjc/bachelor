@@ -1,0 +1,8 @@
+.my-reset {
+    width: 100%;
+}
+.my-left {
+    width: 250px;
+    position: absolute;
+    left: 0;
+}
