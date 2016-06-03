@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper
 public interface ProcessMapper {
     Process selectById(@Param("id") Integer id);
-    List<Process> selectIndirect(@Param("name") String name , @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+    List<Process> selectIndirect(@Param("name") String name , @Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("departmentID") Integer departmentID);
     void insertProcess(Process process);
     void updateProcess(Process process);
 }

@@ -2,6 +2,7 @@ package org.lian.controller;
 
 import org.lian.domain.Authority;
 import org.lian.domain.User;
+import org.lian.service.DepartmentService;
 import org.lian.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,11 +19,17 @@ import javax.servlet.http.HttpSession;
 public class PageController {
 
     private UserService userService;
+    private DepartmentService departmentService;
     private HttpSession httpSession;
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setDepartmentService(DepartmentService departmentService) {
+        this.departmentService = departmentService;
     }
 
     @Autowired
@@ -60,4 +67,17 @@ public class PageController {
     public String showDepartmentAllocation() {
         return "department_allocation";
     }
+
+    @RequestMapping(value = "/cfo_allocation", method = RequestMethod.GET)
+    public String showCFOAllocation(Model model) {
+        model.addAttribute("departments", departmentService.findIndirect(null));
+        return "cfo_allocation";
+    }
+
+    @RequestMapping(value = "/cfo_control", method = RequestMethod.GET)
+    public String showCFOControl(Model model) {
+        model.addAttribute("departments", departmentService.findIndirect(null));
+        return "cfo_control";
+    }
+
 }

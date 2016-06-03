@@ -1,10 +1,11 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/CostControlManagement
+    url: jdbc:mysql://localhost:3306/costcontrolmanagement?useSSL=false
     username: root
-    password: Lianjc1246
+    password: DEBUG
     driver-class-name: com.mysql.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
+
   thymeleaf:
     cache: false
   http:

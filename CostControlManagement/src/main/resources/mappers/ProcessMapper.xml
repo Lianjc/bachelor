@@ -56,7 +56,7 @@
         WHERE Process.Department_ID = Department.ID
         <if test="name != null"> AND Process.Name = #{name}</if>
         <if test="startDate != null and endDate != null"> AND Process.Createdate between #{startDate} and #{endDate}</if>
-
+        <if test="departmentID != null">AND Process.Department_ID = #{departmentID}</if>
     </select>
 
 

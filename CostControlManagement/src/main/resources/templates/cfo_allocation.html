@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>财务总监-部门成本分配</title>
+
+    <!-- Bootstrap -->
+    <link href="../static/dist/css/bootstrap.css " th:href="@{/dist/css/bootstrap.css}" rel="stylesheet"/>
+    <link href="../static/css/mystyle.css" th:href="@{/css/mystyle.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<div th:replace="navbar1 :: navbar1"></div>
+<div class="col-md-1"></div>
+<div class="col-md-10" style="margin-top: 60px;">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">部门成本分配</h3>
+        </div>
+
+        <div class="panel-body">
+            <form action="/action/CFO/department" method="post">
+                <label>添加部门</label>
+                <input type="text" placeholder="请输入部门名称" name="description"/>
+                <button type="submit">确认添加</button>
+                <label th:if="${resultMsg}" th:text="${resultMsg}"></label>
+            </form>
+            <hr/>
+            <form action="/action/CFO/allocation" method="post">
+                <label>选择部门</label>
+                <select name="id">
+                    <option th:each="department : ${departments}"
+                            th:value="${department.id}" th:text="${department.description}"></option>
+                </select>
+                <br/>
+                <label>计划成本</label>
+                <input type="text" placeholder="请输入分配金额" name="plancost"/>
+                <button type="submit">确认分配</button>
+                <label th:if="${allocationMsg}" th:text="${allocationMsg}"></label>
+            </form>
+            <hr/>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>部门名称</th>
+                    <th>计划成本</th>
+                    <th>创建时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="department : ${departments}">
+                    <th th:text="${departmentStat.count}"></th>
+                    <th th:text="${department.description}"></th>
+                    <th th:text="${department.plancost}"></th>
+                    <th th:text="(${department.createdate} != null ? ${#dates.format(department.createdate, 'yyyy-MM-dd')} : ' ')"></th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../static/dist/js/jquery.min.js" th:src="@{/dist/js/jquery.min.js}" type="text/javascript"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../static/dist/js/bootstrap.min.js" th:src="@{/dist/js/bootstrap.min.js}" type="text/javascript"></script>
+<script src="../static/js/main.js" th:src="@{/js/main.js}" type="text/javascript"></script>
+</body>
+</html>

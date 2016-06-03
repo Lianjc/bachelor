@@ -28,8 +28,8 @@ public class ProcessServiceImpl implements ProcessService {
     }
 
     @Override
-    public List<Process> findIndirect(String name, Date startdate, Date enddate) {
-        return processMapper.selectIndirect(name, startdate, enddate);
+    public List<Process> findIndirect(String name, Date startdate, Date enddate, Integer departmentID) {
+        return processMapper.selectIndirect(name, startdate, enddate, departmentID);
     }
 
     @Override

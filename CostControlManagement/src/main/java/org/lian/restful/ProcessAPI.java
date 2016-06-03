@@ -26,13 +26,13 @@ public class ProcessAPI {
     }
 
     @RequestMapping(value = "" , method = RequestMethod.GET)
-    public List<Process> getIndirect(String name, Long start , Long end){
+    public List<Process> getIndirect(String name, Long start , Long end, Integer departmentID){
         Date startDate = null;
         Date endDate = null;
         if (start != null) {
             startDate = new Date(start);
             endDate = new Date(end);}
-        return processService.findIndirect(name,startDate,endDate);
+        return processService.findIndirect(name,startDate,endDate, departmentID);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST ,consumes = "application/json")

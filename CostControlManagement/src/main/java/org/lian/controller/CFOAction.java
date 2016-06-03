@@ -27,7 +27,14 @@ public class CFOAction {
     public String doAddDepartment(@ModelAttribute Department department, RedirectAttributes redirect) {
         departmentService.addDepartment(department);
         redirect.addFlashAttribute("resultMsg", "添加成功!");
-        return "redirect:/department_allocation";
+        return "redirect:/cfo_allocation";
+    }
+
+    @RequestMapping(value = "/allocation", method = RequestMethod.POST)
+    public String doAllocation(@ModelAttribute Department department, RedirectAttributes redirect) {
+        departmentService.editDepartment(department);
+        redirect.addFlashAttribute("allocationMsg", "分配成功!");
+        return "redirect:/cfo_allocation";
     }
 
 }

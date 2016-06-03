@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface ProcessService {
     Process findOne(Integer id);
-    List<Process> findIndirect(String name , Date startdate , Date enddate);
+    List<Process> findIndirect(String name , Date startdate , Date enddate, Integer departmentID);
     Integer addProcess(Process process);
     Process editProcess(Process process);
 }

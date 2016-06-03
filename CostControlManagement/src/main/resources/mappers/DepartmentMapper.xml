@@ -13,12 +13,13 @@
             <result property="phone" column="User_Phone"/>
             <result property="name" column="User_Name"/>
         </association>
+        <collection property="processes" ofType="org.lian.domain.Process" column="departmentID" select="org.lian.mapper.ProcessMapper.selectIndirect"/>
     </resultMap>
     <sql id="*">
         Department.ID as ID,
         Department.Description as Description,
         Department.Createdate as Createdate,
-        Department.Cost as Cost,
+        sum(Process.Cost) as Cost,
         Department.Plan_Cost as Plan_Cost,
         User.ID as User_ID,
         User.Name as User_Name,
@@ -41,16 +42,18 @@
 
     <select id="selectByID" resultMap="basicMap">
         SELECT <include refid="*"/>
-        FROM Department, User
-        WHERE Department.User_ID = User.ID
-        AND Department.ID = #{id}
+        FROM Department LEFT JOIN User ON Department.User_ID = User.ID
+        LEFT JOIN process On process.Department_ID = department.ID
+        GROUP BY department.ID
+        HAVING Department.ID = #{id}
     </select>
 
     <select id="selectIndirect" resultMap="basicMap">
         SELECT <include refid="*"/>
-        FROM Department, User
-        WHERE Department.User_ID = User.ID
-        <if test="description != null"> AND Department.Description = #{description} </if>
+        FROM Department LEFT JOIN User ON Department.User_ID = User.ID
+        LEFT JOIN process On process.Department_ID = department.ID
+        GROUP BY department.ID
+        <if test="description != null"> HAVING Department.Description = #{description} </if>
     </select>
 
 </mapper>
