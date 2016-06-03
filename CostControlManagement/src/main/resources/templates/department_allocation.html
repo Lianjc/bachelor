@@ -24,7 +24,7 @@
             <div class="panel-body">
                 <form class="form-horizontal">
                     <div class="form-group form-group-md">
-                        <form class="col-md-12" action="/action/CFO/department" method="post">
+                        <div class="col-md-12">
                             <div class="col-md-2">
                                 <label class="control-label" for="formGroupInputLarge">添加部门</label>
                             </div>
@@ -33,14 +33,13 @@
                                        placeholder="输入部门名称"/>
                             </div>
                             <div class="col-md-1">
-                                <!--<input class="btn btn-default btn-md" type="button" value="确认添加"-->
-                                       <!--id="addDepartmentSubmit"/>-->
-                                <button class="btn btn-default btn-md" type="submit">确认添加</button>
+                                <input class="btn btn-default btn-md" type="button" value="确认添加"
+                                       id="addDepartmentSubmit"/>
                             </div>
                             <div class="col-md-3">
                                 <label th:text="${resultMsg}"></label>
                             </div>
-                        </form>
+                        </div>
                         <div class="col-md-12">
                             <hr/>
                         </div>
