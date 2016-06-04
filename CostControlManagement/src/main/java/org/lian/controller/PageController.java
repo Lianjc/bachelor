@@ -1,8 +1,10 @@
 package org.lian.controller;
 
 import org.lian.domain.Authority;
+import org.lian.domain.Department;
 import org.lian.domain.User;
 import org.lian.service.DepartmentService;
+import org.lian.service.ProcessService;
 import org.lian.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by lianjiangchao on 16/5/24.
@@ -20,6 +26,7 @@ public class PageController {
 
     private UserService userService;
     private DepartmentService departmentService;
+    private ProcessService processService;
     private HttpSession httpSession;
 
     @Autowired
@@ -30,6 +37,11 @@ public class PageController {
     @Autowired
     public void setDepartmentService(DepartmentService departmentService) {
         this.departmentService = departmentService;
+    }
+
+    @Autowired
+    public void setProcessService(ProcessService processService) {
+        this.processService = processService;
     }
 
     @Autowired
@@ -75,8 +87,35 @@ public class PageController {
     }
 
     @RequestMapping(value = "/cfo_control", method = RequestMethod.GET)
-    public String showCFOControl(Model model) {
-        model.addAttribute("departments", departmentService.findIndirect(null));
+    public String showCFOControl(String startdate, String enddate, String name, Model model) {
+        List<Department> departments = departmentService.findIndirect(null);
+        model.addAttribute("departments", departments);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date start = null;
+        Date end = null;
+
+        try {
+            if (!startdate.equals("")) {
+                start = simpleDateFormat.parse(startdate);
+            }
+
+            if (!enddate.equals("")) {
+                end = simpleDateFormat.parse(enddate);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        for (Department department : departments) {
+            department.setProcesses(processService.findIndirect(name, start, end, department.getId()));
+            Double planCost = department.getPlancost();
+            Double cost = department.getCost();
+            Double difference = null;
+            if (planCost != null && cost != null && planCost != 0) {
+                difference = (planCost - cost) / planCost;
+            }
+            department.setDifference(difference);
+        }
         return "cfo_control";
     }
 

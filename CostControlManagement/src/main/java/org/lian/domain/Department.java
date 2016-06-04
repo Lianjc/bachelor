@@ -14,6 +14,7 @@ public class Department {
     private Date createdate;
     private Double plancost;
     private Double cost;
+    private Double difference;
 
     private List<Process> processes;
 
@@ -63,6 +64,14 @@ public class Department {
 
     public void setCost(Double cost) {
         this.cost = cost;
+    }
+
+    public Double getDifference() {
+        return difference;
+    }
+
+    public void setDifference(Double difference) {
+        this.difference = difference;
     }
 
     public List<Process> getProcesses() {

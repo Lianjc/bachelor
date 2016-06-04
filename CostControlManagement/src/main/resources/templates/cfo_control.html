@@ -15,6 +15,68 @@
 <body>
 <div th:replace="navbar1 :: navbar1"></div>
 <div class="col-md-1"></div>
+<div class="col-md-10" style="margin-top: 60px">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">部门成本控制</div>
+        </div>
+
+        <div class="panel-body">
+            <form action="/cfo_control" method="get">
+                <label>选择时间段</label>
+                <input type="date" name="startdate"/>
+                <input type="date" name="enddate"/>
+                <br/>
+                <label>或输入部门名称</label>
+                <select name="name">
+                    <option th:each="department : ${departments}"
+                            th:value="${department.description}" th:text="${department.description}"></option>
+                </select>
+                <br/>
+                <button type="submit">确定</button>
+            </form>
+            <hr/>
+            <table class="table table-hover" th:each="department : ${departments}">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>部门名称</th>
+                    <th>计划成本</th>
+                    <th>实际成本</th>
+                    <th>差异</th>
+                    <th>创建时间</th>
+                </tr>
+                <tr>
+                    <th th:text="${departmentStat.count}"></th>
+                    <th th:text="${department.description}"></th>
+                    <th th:text="${department.plancost}"></th>
+                    <th th:text="${department.cost}"></th>
+                    <th th:text="(${department.difference} != null ? ${department.difference} : '未核算')"></th>
+                    <th th:text="(${department.createdate} != null ? ${#dates.format(department.createdate, 'yyyy-MM-dd')} : ' ')"></th>
+                </tr>
+                <tr>
+                    <th>序号</th>
+                    <th>工序名称</th>
+                    <th>详情</th>
+                    <th>种类</th>
+                    <th>计划成本</th>
+                    <th>实际成本</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="process : ${department.processes}">
+                    <th th:text="${processStat.count}"></th>
+                    <th th:text="${process.name}"></th>
+                    <th th:text="${process.description}"></th>
+                    <th th:text="${process.type}"></th>
+                    <th th:text="${process.plancost}"></th>
+                    <th th:text="${process.cost}"></th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../static/dist/js/jquery.min.js" th:src="@{/dist/js/jquery.min.js}" type="text/javascript"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->

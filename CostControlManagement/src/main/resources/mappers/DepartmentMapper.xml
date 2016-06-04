@@ -13,7 +13,6 @@
             <result property="phone" column="User_Phone"/>
             <result property="name" column="User_Name"/>
         </association>
-        <collection property="processes" ofType="org.lian.domain.Process" column="departmentID" select="org.lian.mapper.ProcessMapper.selectIndirect"/>
     </resultMap>
     <sql id="*">
         Department.ID as ID,
